@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<th:block th:include="Fragments/head :: head">
+		</th:block>
+	</head>
+	<body>
+		<div class="container">
+			<div th:insert="Fragments/BodyHeader :: div">
+			</div>
+			<h3>Dades empleat</h3><br>
+			<form th:object="${EmpleatDetall}" th:method="post" th:action="@{/v1/empleats/empleat/}">
+				<input type="hidden" th:field="*{id}">
+				
+				<div class="form-group">
+					<label class="cloud-label">Nom</label>
+					<input type="text" th:field="*{nom}"> <br><br>
+					<label class="cloud-label">Escull una feina</label>
+					<select name="feina">
+					<option th:each="tipusFeinaOpt : ${T(com.httpServiceEmpleatsApp.model.entity.TipusFeina).values()}"
+							th:selected="(*{feina} == ${tipusFeinaOpt})"
+							th:value="${tipusFeinaOpt}"
+							th:text="${tipusFeinaOpt}">"Feina"</option>
+					</select> <br>
+					<span th:if="${FormType == 'view'}">
+						<label class="cloud-label">Salari</label>
+						<input type="text" th:field="*{salari}" disabled>
+					</span>
+				</div>
+				<br>
+				<button type="submit" class="btn btn-outline-success">Guardar</button>
+				<a class="btn btn-outline-danger" th:href="@{/v1/empleats/}" role="button">Descartar</a>
+			</form>
+        
+		</div>
+		
+		<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+  			<strong><label th:text="${error}"></label></strong>
+  			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</body>
+</html>

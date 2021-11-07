@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<th:block th:include="Fragments/head :: head">
+</th:block>
+</head>
+<body>
+	<div class="container">
+		
+			<img src="/images/error404.jpg" alt="Error 404 - NOT FOUND"
+				width="600" height="200" /> <br> <br>
+			<h2>HTTP SERVICE - GESTIÓ D'EMPLEATS</h2>
+			
+			<h3>Ho sento! No he pogut trobar el contingut...</h3>
+			<p>
+				<a class="btn btn-primary" th:href="@{/}" role="button">Torna
+					a l'inici</a>
+			</p>
+		</div>
+</body>
+</html>

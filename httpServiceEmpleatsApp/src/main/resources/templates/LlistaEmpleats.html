@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+	<th:block th:include="Fragments/head :: head"></th:block>
+</head>
+<body>
+	<div class="container">
+		<div th:insert="Fragments/BodyHeader :: div"></div>
+
+		<a class="btn btn-primary" th:href="@{/v1/empleats/empleat/}" role="Button">Alta empleat</a> <br> <br>		
+		
+		<form method="get" th:action="@{/v1/empleats/}">
+			<div class="form-group">
+				<label class="cloud-label">Filtrar per feina</label>
+				<select id="feina" name="feina">
+					<option th:each="tipusFeinaOpt : ${T(com.httpServiceEmpleatsApp.model.entity.TipusFeina).values()}"
+						th:selected="${tipusFeinaOpt} == *{filtre}"
+						th:value="${tipusFeinaOpt}"
+						th:text="${tipusFeinaOpt}">"Feina"</option>
+				</select>
+				
+				<button type="submit" class="btn btn-outline-dark">Cercar</button>
+				<a class="btn btn-outline-primary" th:href="@{/v1/empleats/}" role="Button">Neteja filtre</a>
+			</div>
+		</form>
+		
+		<div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+  			<strong><label th:text="${success}"></label></strong>
+  			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		
+		<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errorImatge != null}">
+  			<strong><label th:text="${errorImatge}"></label></strong>
+  			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+
+		<div class="cloud-table-scroll">
+
+			<table class="table table-stripped ">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nom</th>
+						<th>Feina</th>
+						<th>Salari</th>
+						<th>Imatge</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="empleat: ${EmpleatLlista}">
+						<td th:text="${empleat.id}"></td>
+						<td th:text="${empleat.nom}"></td>
+						<td th:text="${empleat.feina}"></td>
+						<td th:text="${empleat.salari}"></td>
+						<td th:text="${empleat.imatge} ? 'SI' : 'NO'" style="text-align:center"></td>						
+					
+						<td><a class="btn btn-outline-success"
+							th:href="@{/v1/empleats/empleat/__${empleat.id}__}" role="button">Info/Editar</a></td>
+						<td><a class="btn btn-outline-warning"
+							th:href="@{/v1/empleats/__${empleat.id}__/upload}" role="button">Pujar imatge</a></td>
+						<td><a class="btn btn-outline-warning"
+							th:href="@{/v1/empleats/__${empleat.id}__/download/}" role="button">Baixar imatge</a></td>
+						<td><a class="btn btn-outline-danger"
+							th:href="@{/v1/empleats/__${empleat.id}__/delete}" role="button"
+							onclick="return confirm('CONFIRMA: Eliminar empleat')">Esborrar</a></td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+	</div>
+</body>
+</html>

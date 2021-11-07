@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<th:block th:include="Fragments/head :: head">
+		</th:block>
+	</head>
+	<body>
+		<div class="container">
+			<div th:insert="Fragments/BodyHeader :: div">
+			</div>
+			
+			<h3>Imatge empleat</h3><br>
+			
+			<form th:object="${EmpleatImatge}" th:method="post" th:action="@{/v1/empleats/empleat/upload}" 
+				enctype="multipart/form-data" id="fileUploadForm" class="container">
+				<input type="hidden" th:field="*{id}">
+				
+		            <div class="form-group">
+		            	<span th:if="${FormType == 'upload'}">
+		            		<label class="cloud-label">Nom</label>
+								<input type="text" th:field="*{nom}"> <br><br>
+		            		
+		            		<label class="cloud-label">Escull una imatge</label>
+			                <label class="custom-file" id="customFile">
+			                    <input type="file" class="custom-file-input" name="file" aria-describedby="fileHelp">
+			                    <span class="custom-file-control form-control-file"></span>
+			                </label><br><br>
+			                <button type="submit" class="btn btn-outline-success">Pujar imatge</button>
+			                <a class="btn btn-outline-danger" th:href="@{/v1/empleats/}" role="button">Tornar</a>
+						</span>
+		            </div>
+			            
+	            	<div class="form-group">
+	            		<span th:if="${FormType == 'download'}">
+							<label class="cloud-label">Nom</label>
+								<input type="text" th:field="*{nom}"> <br>
+								<img th:src="@{/files/__*{id}__/foto.jpg}" alt="Foto empleat" width="70" height="70"/><br>
+          						<a th:href="@{/files/__*{id}__/foto.jpg}" download>Descarrega't la imatge</a><br><br>
+          					<a class="btn btn-outline-danger" th:href="@{/v1/empleats/}" role="button">Tornar</a>
+						</span>       	
+	            	</div>
+        	</form>	      
+		</div>
+	</body>
+</html>
